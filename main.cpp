@@ -3,46 +3,46 @@
 using namespace std;
 
 int main() {
-    int fr, to, N, M;
+    int x, y, N, M;
     cin >> N >> M;
 
     vector <vector<bool>> MS (N + 1, vector <bool>(N + 1, false));
 
     for (int i = 0; i < M; ++i){
-        cin >> fr >> to;
-        MS[fr][to] = true;
-        MS[to][fr] = true;
+        cin >> x >> y;
+        MS[x][y] = true;
+        MS[y][x] = true;
     }
 
-    vector <int> rel (N + 1, -1);
-    vector <int> len (N + 1, -1);
-    vector <int> q (N + 1, -1);
-    int beg, end, i, ans = 0;
+    vector <int> P (N + 1, -1);
+    vector <int> Rast (N + 1, -1);
+    vector <int> queue (N + 1, -1);
+    int q_beg, q_end, i, answer = 0;
 
     for (int start = 1; start <= N; ++start){
-        if (rel[start] == -1){
-            ++ans;
-            beg = 0, end = 0, i;
-            q[0] = start;
-            len[start] = 0;
-            rel[start] = 0;
+        if (P[start] == -1){
+            ++answer;
+            q_beg = 0, q_end = 0, i;
+            queue[0] = start;
+            Rast[start] = 0;
+            P[start] = 0;
 
-            while (beg <= end){
-                i = q[beg];
-                beg++;
+            while (q_beg <= q_end){
+                i = queue[q_beg];
+                q_beg++;
                 for (int j = 1; j <= N; ++j){
-                    if (MS[i][j] && rel[j] == -1){
-                        rel[j] = i;
-                        len[j] = len[j] + 1;
-                        ++end;
-                        q[end] = j;
+                    if (MS[i][j] && P[j] == -1){
+                        P[j] = i;
+                        Rast[j] = Rast[j] + 1;
+                        ++q_end;
+                        queue[q_end] = j;
                     }
                 }
             }
         }
     }    
 
-    cout << ans - 1;
+    cout << answer - 1;
 
     return 0;
 }
