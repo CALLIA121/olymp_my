@@ -22,7 +22,6 @@ void DFS_start(vector<vector<bool>>& graf, vector<int>& rel, vector<int>& number
             rel[i] = 0;
             number[i] = subGraf;
             DFS(i, graf, rel, number, subGraf);
-            
         }
     }
 }
