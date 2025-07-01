@@ -2,6 +2,8 @@
 #include <vector>
 using namespace std;
 
+// Решение задачи про королевство
+
 int main() {
     int x, y, N, M;
     cin >> N >> M;
