@@ -4,48 +4,52 @@ using namespace std;
 
 // Решение задачи про королевство DFS
 
-void DFS(int i, vector<vector<bool>>& graf, vector<int>& rel, vector<int>& number, int& answer){
+void DFS(int i, vector<vector<bool>>& graf, vector<int>& rel, vector<int>& rast){
     for (int j = 1; j < graf.size(); ++j){
         if (graf[i][j] && rel[j] == -1){
-            number[j] = answer;
+            rast[j] = rast[i] + 1;
             rel[j] = i;
-            DFS(j, graf, rel, number, answer);
-        }
-    }
-}
-
-void DFS_start(vector<vector<bool>>& graf, vector<int>& rel, vector<int>& number, int& subGraf){
-    subGraf = 0;
-    for (int i = 1; i <= graf.size(); ++i){
-        if (number[i] == -1){
-            ++subGraf;
-            rel[i] = 0;
-            number[i] = subGraf;
-            DFS(i, graf, rel, number, subGraf);
+            DFS(j, graf, rel, rast);
         }
     }
 }
 
 
 int main() {
-    int x, y, N, M;
+    int N, M, k, x, y;
     cin >> N >> M;
 
     vector <vector<bool>> MS (N + 1, vector <bool>(N + 1, false));
 
-    for (int i = 0; i < M; ++i){
+    for (int i = 0; i < k; ++i){
         cin >> x >> y;
-        MS[x][y] = true;
-        MS[y][x] = true;
+        
     }
 
     vector <int> rel (N + 1, -1);   
-    vector <int> number (N + 1, -1);   
-    int ans;
+    vector <int> rast (N + 1, -1);   
 
-    DFS_start(MS, rel, number, ans);
+    rel[k] = 0;
+    rast[k] = 0;
+    DFS(k, MS, rel, rast);
 
-    cout << ans - 1;
+    int r1, r2;
+
+    r1 = rast[v1];
+    r2 = rast[v2];
+
+    while (v1 != v2){
+        // cout << r1 << ' ' << v1 << ", " << r2 << " " << v2 << endl; 
+        if (r1 > r2){
+            v1 = rel[v1];
+            r1 = rast[v1];
+        } else {
+            v2 = rel[v2];
+            r2 = rast[v2];
+        }
+    }
+
+    cout << v1;
 
     return 0;
 }
