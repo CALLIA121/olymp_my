@@ -3,40 +3,30 @@
 #include <algorithm>
 using namespace std;
 
-// Решение задачи про королевство DFS
-
-void kraskal(int i, vector<vector<bool>>& graf, vector<int>& rel, vector<int>& rast){
-    
-}
-
-bool comp(vector<int> a, vector<int> b)
-{ 
-    return a[2] < b[2]; 
-}
+bool comp(vector<int> a, vector<int> b) {return a[2] < b[2];}
 
 int main() {
     int N, M, k, x, y;
-    cin >> N >> M;
+    cin >> N;
 
     vector <vector<int>> MR;
     vector <int> temp (3, 0);
 
-    for (int i = 1; i <= M; ++i){
-        for (int j = 0; j < 3; ++j){
+    for (int i = 1; i <= N; ++i){
+        for (int j = 1; j <= N; ++j){
             cin >> x;
-            temp[j] = x;
+            if (x > 0 && i < j){
+                M++;
+                temp[0] = i;
+                temp[1] = j;
+                temp[2] = x;
+                MR.push_back(temp);
+            }
         }
-        MR.push_back(temp);
     }
 
     sort(MR.begin(), MR.end(), comp);
-
-    /*
-    for (auto temp: MR){
-        cout << temp[0] << ' ' << temp[1] << ' ' << temp[2] << endl;
-    }
-    */
-   
+    
     vector <vector<int>> childs (N + 1, vector<int>(0));
     vector <int> color (N + 1, -1);
 
@@ -66,11 +56,8 @@ int main() {
     cout << dist_wheight << endl;
 
     sort(childs[1].begin(), childs[1].end());
-
     for (auto child: childs[1]){
         cout << child << " ";
     }
-    cout << endl;
-
     return 0;
 }
