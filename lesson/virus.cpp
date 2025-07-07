@@ -4,24 +4,31 @@
 using namespace std;
 
 int main() {
-    int N = 8, x1, y1, x2, y2;
+    int N, M, x1, y1, x2, y2, x;
 
-    cin >> N >> x1 >> y1 >> x2 >> y2;
+    cin >> N >> M >> x1 >> y1 >> x2 >> y2;
+    vector<vector<int>> map (N, vector<int>(N, -1));
     x1--;
     x2--;
     y1--;
     y2--;
 
-    vector<vector<int>> map (N, vector<int>(N, 0));
+    for (int i = 0; i < N; ++i){
+        for (int j = 0; j < M; ++j){
+            cin >> x;
+            if (x == 1)
+                map[i][j] = -1;
+            else
+                map[i][j] = 0;
+        }
+    }
+
+    
     vector<pair<int, int>> deltaM = {
-        pair( 1,  2),
-        pair(-1,  2),
-        pair( 1, -2),
-        pair(-1, -2),
-        pair( 2,  1),
-        pair(-2,  1),
-        pair( 2, -1),
-        pair(-2, -1)
+        pair( 1,  0),
+        pair(-1,  0),
+        pair( 0,  1),
+        pair( 0, -1)
     };
     vector<pair<int, int>> qu;
     int qbeg = 0, qend = 1, xcur, ycur;
@@ -38,16 +45,15 @@ int main() {
                 ycur + delta.first >= 0  && 
                 ycur + delta.first < N   && 
                 xcur + delta.second >= 0 && 
-                xcur + delta.second < N
+                xcur + delta.second < M
             ){
                 if (map[ycur + delta.first][xcur + delta.second] == 0){
                     map[ycur + delta.first][xcur + delta.second] = map[ycur][xcur] + 1;
-                    qu.push_back(pair(xcur + delta.first, ycur + delta.second));
+                    qu.push_back(pair(xcur + delta.second, ycur + delta.first));
                     qend++;
                 }
             }
         } 
-
     }
 
     cout << map[y2][x2] - 1 << endl;
@@ -64,7 +70,7 @@ int main() {
                     ycur + delta.first >= 0  && 
                     ycur + delta.first < N   && 
                     xcur + delta.second >= 0 && 
-                    xcur + delta.second < N
+                    xcur + delta.second < M
                 ){
                     if (map[ycur + delta.first][xcur + delta.second] == map[ycur][xcur] - 1){
                         way.push_back(pair(xcur, ycur));
@@ -80,7 +86,5 @@ int main() {
             cout << way[i].first + 1 << ' ' << way[i].second + 1 << "; ";
         }
     }
-
     return 0;
 }
-// 4 4 2 7
