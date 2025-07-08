@@ -32,10 +32,10 @@ int main() {
     };
     vector<pair<int, int>> qu;
     int qbeg = 0, qend = 1, xcur, ycur;
-    qu.push_back(pair(x1, y1));
-    map[y1][x1] = 1;
+    qu.push_back(pair(x2, y2));
+    map[y2][x2] = 1;
 
-    while (map[y2][x2] == 0 && qbeg <= qend){
+    while (map[y1][x1] == 0){
         xcur = qu[qbeg].first;
         ycur = qu[qbeg].second;
         qbeg++;
@@ -45,7 +45,7 @@ int main() {
                 ycur + delta.first >= 0  && 
                 ycur + delta.first < N   && 
                 xcur + delta.second >= 0 && 
-                xcur + delta.second < M
+                xcur + delta.second < N
             ){
                 if (map[ycur + delta.first][xcur + delta.second] == 0){
                     map[ycur + delta.first][xcur + delta.second] = map[ycur][xcur] + 1;
@@ -54,13 +54,14 @@ int main() {
                 }
             }
         } 
+
     }
 
-    cout << map[y2][x2] - 1 << endl;
+    cout << map[y1][x1] - 1 << endl;
 
-    if (map[y2][x2] - 1 != -1){
+    if (map[y1][x1] - 1 != -1){
 
-        xcur = x2; ycur = y2;
+        xcur = x1; ycur = y1;
 
         vector <pair<int, int>> way;
 
@@ -70,21 +71,18 @@ int main() {
                     ycur + delta.first >= 0  && 
                     ycur + delta.first < N   && 
                     xcur + delta.second >= 0 && 
-                    xcur + delta.second < M
+                    xcur + delta.second < N
                 ){
                     if (map[ycur + delta.first][xcur + delta.second] == map[ycur][xcur] - 1){
-                        way.push_back(pair(xcur, ycur));
+                        cout << xcur + 1 << ' ' << ycur + 1 << "; ";
                         xcur = xcur + delta.second; ycur = ycur + delta.first;
                     }
                 }
             }
         }while (map[ycur][xcur] != 1);
-
-        way.push_back(pair(xcur, ycur));
-
-        for (int i = way.size() - 1; i >= 0; i--){
-            cout << way[i].first + 1 << ' ' << way[i].second + 1 << "; ";
-        }
+        
+        cout << x2 + 1 << ' ' << y2 + 1 << endl;
     }
+
     return 0;
 }
