@@ -5,16 +5,15 @@ using namespace std;
 #define inf 500000
 
 int main() {
-    int N, M, k, x, min, besti, bestj, dist = 0;
-    cin >> N;
+    int N, M, min, besti, bestj, dist = 0, x, y, t;
+    cin >> N >> M;
 
-    vector <vector<int>> MS (N + 1, vector<int>(N + 1, 0));
+    vector <vector<int>> MS (N + 1, vector<int>(N + 1, inf));
 
-    for (int i = 1; i <= N; ++i){
-        for (int j = 1; j <= N; ++j){
-            cin >> x;
-            MS[i][j] = (x == 0?inf:x);
-        }
+    for (int i = 1; i <= M; ++i){
+        cin >> x >> y >> t;
+        MS[x][y] = t;
+        MS[y][x] = t;
     }
     
     vector <int> color (N + 1, 0);

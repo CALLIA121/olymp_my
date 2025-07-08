@@ -31,7 +31,7 @@ void deikstra(vector<vector<int>>& graf, int from, int to, int N, vector<int>& r
                 min = dist[j];
             }
         }
-    } while (i != from || i != -1);
+    } while (i != from && i != -1);
 }
 
 int main() {

@@ -1,45 +1,66 @@
 #include <iostream>
 #include <vector>
+#include <climits>
 using namespace std;
 
-// Решение задачи про путь
+#define inf 100000
 
-int main() {
-    int x, y, N, M, start, end;
-    cin >> N >> M >> start >> end;
+// Алгоритм Дейкстры
 
-    vector <vector<bool>> MS (N + 1, vector <bool>(N + 1, false));
+void deikstra(vector<vector<int>>& graf, int from, int to, int N, vector<int>& rel, vector<int>& dist){
+    vector <bool> vizit (N + 1, true);
 
-    for (int i = 0; i < M; ++i){
-        cin >> x >> y;
-        MS[x][y] = true;
-        MS[y][x] = true;
-    }
+    int i = to;
 
-    vector <int> P (N + 1, -1);
-    vector <int> Rast (N + 1, -1);
-    vector <int> queue (N + 1, -1);
-    int q_beg, q_end, i;
+    rel[i] = 0;
+    dist[i] = 0;
 
-    q_beg = 0, q_end = 0;
-    queue[0] = start;
-    Rast[start] = 0;
-    P[start] = 0;
-
-    while (q_beg <= q_end){
-        i = queue[q_beg];
-        q_beg++;
+    do {
+        vizit[i] = false;
         for (int j = 1; j <= N; ++j){
-            if (MS[i][j] && P[j] == -1){
-                P[j] = i;
-                Rast[j] = Rast[i] + 1;
-                ++q_end;
-                queue[q_end] = j;
+            if (graf[j][i] > 0 && dist[j] > dist[i] + graf[j][i]){
+                dist[j] = dist[i] + graf[j][i];
+                rel[j] = i;
             }
         }
+        i = -1;
+        int min = inf;
+        for (int j = 1; j <= N; ++j){
+            if (dist[j] < min && vizit[j]){
+                i = j;
+                min = dist[j];
+            }
+        }
+    } while (i != from && i != -1);
+}
+
+int main() {
+    int x, y, N, M, a, b, c;
+    cin >> N >> M;
+
+    vector <vector<int>> MS (N + 1, vector <int>(N + 1, false));
+
+    cin >> x >> y;
+
+    for (int i = 0; i < M; ++i){
+        cin >> a >> b >> c;
+        MS[a][b] = c;
+        MS[b][a] = c;
     }
 
-    cout << Rast[end];
+    vector <int> rel (N + 1, -1);   
+    vector <int> dist (N + 1, inf);
+
+    deikstra(MS, x, y, N, rel, dist);
+
+    int i = x;
+
+    cout << dist[x] << endl;
+
+    do {
+        cout << i << ' ';
+        i = rel[i];
+    }while (i != 0);
 
     return 0;
 }

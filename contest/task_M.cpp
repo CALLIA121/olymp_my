@@ -21,10 +21,11 @@ int main() {
 
     vector <vector<bool>> MS (N + 1, vector <bool>(N + 1, false));
 
-    for (int i = 1; i <= N - 1; ++i){
-        cin >> x >> y;
-        MS[x][y] = 1;
-        MS[y][x] = 1;
+    for (int i = 1; i <= N; ++i){
+        for (int j = 1; j <= N; ++j){
+            cin >> x;
+            MS[i][j] = x;
+        }
     }
 
     vector <int> rel (N + 1, -1);   
